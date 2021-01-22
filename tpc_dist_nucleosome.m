@@ -18,8 +18,8 @@ for n = 1:numel(bins) - 1
     max_idx_cell = cellfun(@(x) x<=max_dist, dist_cell, 'UniformOutput', false);
     idx_cell = cellfun(@(x,y) x & y, min_idx_cell, max_idx_cell, 'UniformOutput', false);
     vals(n,:) = cellfun(@(x,y) x(y), data_cell, idx_cell, 'UniformOutput', false);
-    mean_array(n,:) = cellfun(@(x,y) mean(x(y)), data_cell, idx_cell);
-    sem_array(n,:) = cellfun(@(x,y) std(x(y))/sqrt(sum(y)), data_cell, idx_cell);
+    mean_array(n,:) = cellfun(@(x,y) nanmean(x(y)), data_cell, idx_cell);
+    sem_array(n,:) = cellfun(@(x,y) nanstd(x(y))/sqrt(sum(y)), data_cell, idx_cell);
 end
 for i = 1:numel(label_cell)
     if i == 1
